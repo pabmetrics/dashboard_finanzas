@@ -1,0 +1,84 @@
+/* Fondo general */
+.stApp {
+    background-color: #0f172a; /* azul oscuro */
+    color: white; /* texto */
+}
+
+/* Ajusta el header de Streamlit */
+header[data-testid="stHeader"] {
+    background-color: #0f172a;
+    height: 0px;
+}
+
+
+
+iframe[data-testid="stCustomComponentV1"] {
+        height: 0 !important;
+        width: 0 !important;
+        border: 0 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+.e52wr8w0:has(iframe[data-testid="stCustomComponentV1"])
+ {
+        height: 0 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        overflow: hidden !important;
+    }
+
+.e1mlolmg0:has(iframe[data-testid="stCustomComponentV1"])
+ {
+        height: 0 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        overflow: hidden !important;
+    }
+
+
+
+/* Títulos */
+h1, h2, h3 {
+    color: #38bdf8;
+}
+
+/* Cajas (ej. metrics, dataframe, etc.) */
+.stDataFrame, .stTable {
+    background-color: #1e293b;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+div[data-testid="stAlertContentInfo"] {
+    color: white;
+}
+
+div[data-testid="stMetric"] {
+    background-color: #1e293b; /* gris oscuro */
+    padding: 0.8vw;
+    border-radius: 0.5vw;
+    text-align: center;
+    box-shadow: 0px 0.1px 0.2px rgba(0,0,0,0.3);
+}
+
+.block-container {
+    padding-bottom: 0;
+}
+.stPlotlyChart {
+    margin-bottom: -1vw;
+    margin-top: -1vw;
+}
+
+/* Valor principal */
+label[data-testid="stMetricLabel"] {
+    color: #ffffff;
+    font-size: 1.5vw;
+    font-weight: bold;
+}
+
+/* Etiqueta */
+div[data-testid="stMetricValue"] {
+    color: #ffffff;
+    font-size: 1.5vw;
+}
