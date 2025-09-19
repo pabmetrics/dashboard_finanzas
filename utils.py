@@ -81,12 +81,12 @@ def load_and_process_data(uploaded_file):
         # Procesar Saldos
         if 'Activos' in excel_data:
             saldos_df = excel_data['Activos']
+
             if not saldos_df.empty:
                 id_cols = ['Nombre', 'Tipo de Cuenta']
                 available_id_cols = [col for col in id_cols if col in saldos_df.columns]
                 date_cols = [col for col in saldos_df.columns if col not in id_cols]
                 data['saldos'] = process_transposed_data(saldos_df, date_cols, available_id_cols)
-
         # Procesar Deudas
         if 'Deudas' in excel_data:
             deudas_df = excel_data['Deudas']
@@ -115,6 +115,14 @@ def load_and_process_data(uploaded_file):
                 ).reset_index()
                 data['inversiones']['Valor Actual'] = data['inversiones']['Títulos']*data['inversiones']['Precio actual']
                 data['inversiones']['Valor Compra'] = data['inversiones']['Títulos']*data['inversiones']['Precio medio']
+                inv_un_df = data['inversiones'][['Valor Actual', 'Tipo de Activo', 'Fecha']].rename(columns={'Valor Actual': 'Valor', 'Tipo de Activo': 'Tipo de Cuenta'})
+                inv_un_df = inv_un_df.groupby(['Fecha'], as_index=False)['Valor'].sum()
+
+                inv_un_df['Nombre'] = 'Inversiones'
+                inv_un_df['Tipo de Cuenta'] = 'Inversiones'
+
+                data['saldos'] = pd.concat([data['saldos'], inv_un_df], ignore_index=True)
+
         return data
 
     except Exception as e:

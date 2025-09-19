@@ -51,9 +51,16 @@ def load_sidebar():
 
 def load_summary_kpis(data):
     if 'transacciones' in data and not data['transacciones'].empty:
+
+
         trans_df_base = data['transacciones']
+
         trans_df_base['Mes_Año_dt'] = pd.to_datetime(trans_df_base['Mes_Año'], format='%b-%Y')
+
         trans_df = trans_df_base[trans_df_base['Mes_Año_dt'] == trans_df_base['Mes_Año_dt'].max()]
+        max_date = trans_df['Mes_Año'].max()
+
+        st.markdown(f"<span style='color:white'>Fecha evaluada: {max_date}</span>", unsafe_allow_html=True)
         prev_m = trans_df_base['Mes_Año_dt'].max() - relativedelta(months=1)
         trans_df_prev = trans_df_base[trans_df_base['Mes_Año_dt'] == prev_m]
         # Métricas principales
@@ -75,13 +82,13 @@ def load_summary_kpis(data):
         growth_balance = (balance_neto - balance_neto_prev) * 100 / balance_neto_prev
 
         with col1:
-            st.metric("Ingresos Totales", f"€{ingresos_total:,.2f}", str(round(growth_ingresos, 2)) + '%')
+            st.metric(f"Ingresos Totales", f"€{ingresos_total:,.2f}", str(round(growth_ingresos, 2)) + '%')
         with col2:
-            st.metric("Gastos Totales", f"€{gastos_total:,.2f}", str(round(growth_gastos, 2)) + '%', 'inverse')
+            st.metric(f"Gastos Totales", f"€{gastos_total:,.2f}", str(round(growth_gastos, 2)) + '%', 'inverse')
         with col1:
-            st.metric("Balance Neto", f"€{balance_neto:,.2f}", str(round(growth_balance, 2)) + '%')
+            st.metric(f"Balance Neto", f"€{balance_neto:,.2f}", str(round(growth_balance, 2)) + '%')
         with col2:
-            st.metric("Porcentaje de ahorro", f"{porcentaje_ahorro:,.2f} %", str(round(growth_ahorro, 2)) + '%')
+            st.metric(f"Porcentaje de ahorro", f"{porcentaje_ahorro:,.2f} %", str(round(growth_ahorro, 2)) + '%')
 
 def load_investment_kpis(data):
     if 'inversiones' in data and not data['inversiones'].empty:
@@ -100,11 +107,17 @@ def load_investment_kpis(data):
         # Métricas principales
         col1, col2 = st.columns(2)
 
+        trans_df_base = data['inversiones']
+        trans_df_base['Mes_Año'] = trans_df_base['Fecha'].dt.strftime('%b-%Y')
+        trans_df_base['Mes_Año_dt'] = pd.to_datetime(trans_df_base['Mes_Año'], format='%b-%Y')
+
+        trans_df = trans_df_base[trans_df_base['Mes_Año_dt'] == trans_df_base['Mes_Año_dt'].max()]
+        max_date = trans_df['Mes_Año'].max()
 
         with col1:
-            st.metric("Inversión Actual", f"€{inversiones_actual:,.2f}", str(round(rentabilidad, 2)) + '%')
+            st.metric(f"Inversión Actual", f"€{inversiones_actual:,.2f}", str(round(rentabilidad, 2)) + '%')
         with col2:
-            st.metric("Porcentaje de renta variable", f"{prc_renta_variable:,.2f}%", str(round(growth_renta_variable, 2)) + '%')
+            st.metric(f"Renta variable", f"{prc_renta_variable:,.2f}%", str(round(growth_renta_variable, 2)) + '%')
 
 
 
@@ -126,13 +139,17 @@ def load_saldo_kpis(data):
         porc_deuda_pm = round(deuda_pm*100/saldo_pm, 2)
         growth_porc_deuda = porc_deuda_actual - porc_deuda_pm
 
+        trans_df_base = data['transacciones']
+        trans_df_base['Mes_Año_dt'] = pd.to_datetime(trans_df_base['Mes_Año'], format='%b-%Y')
+        trans_df = trans_df_base[trans_df_base['Mes_Año_dt'] == trans_df_base['Mes_Año_dt'].max()]
+        max_date = trans_df['Mes_Año'].max()
 
         with col1:
-            st.metric("Saldo Actual", f"€{saldo_actual:,.2f}", str(round(growth_saldo, 2)) + '%')
+            st.metric(f"Patrimonio", f"€{saldo_actual:,.2f}", str(round(growth_saldo, 2)) + '%')
         with col2:
-            st.metric("Deuda Actual", f"€{deuda_actual:,.2f}", str(round(growth_deuda, 2)) + '%', 'inverse')
+            st.metric(f"Deuda", f"€{deuda_actual:,.2f}", str(round(growth_deuda, 2)) + '%', 'inverse')
         with col3:
-            st.metric("Deuda sobre saldo", f"{porc_deuda_actual:,.2f}%", str(round(growth_porc_deuda, 2)) + '%', 'inverse')
+            st.metric(f"Endeudamiento", f"{porc_deuda_actual:,.2f}%", str(round(growth_porc_deuda, 2)) + '%', 'inverse')
 
 
 def create_transactions_charts(df):
@@ -154,7 +171,7 @@ def create_transactions_charts(df):
                   barmode='group', title = 'Evolución de Ingesos vs Gastos')
 
     container_height = st.session_state.get("container_height", 800)
-    chart_height = int(container_height * 0.38)
+    chart_height = int(container_height * 0.35)
     fig1.update_layout(
         autosize=True,
         plot_bgcolor="#0f172a",  # chart area
@@ -185,8 +202,11 @@ def create_transactions_charts(df):
     # Gráfico 2: Gastos por categoría
     gastos_df = df[df['Tipo'] == 'Gasto'] if 'Tipo' in df.columns else df[df['Importe'] < 0]
     if not gastos_df.empty:
-        gastos_categoria = gastos_df.groupby('Categoria')['Importe'].sum().abs().reset_index()
-        fig2 = px.bar(gastos_categoria, x='Importe', y='Categoria', orientation='h', title = 'Distribución de gastos')
+        gastos_df['Mes_Año_dt'] = pd.to_datetime(gastos_df['Mes_Año'], format='%b-%Y')
+        gastos_f_df = gastos_df[gastos_df['Mes_Año_dt'] == gastos_df['Mes_Año_dt'].max()]
+        max_date = gastos_f_df['Mes_Año'].max()
+        gastos_categoria = gastos_f_df.groupby('Categoria')['Importe'].sum().abs().reset_index()
+        fig2 = px.bar(gastos_categoria, x='Importe', y='Categoria', orientation='h', title = f'Distribución de gastos')
         fig2.update_layout(
             autosize=True,
             plot_bgcolor="#0f172a",  # chart area
@@ -335,20 +355,28 @@ def create_investment_chart(df):
 
 
 def create_budget_analysis(data):
-
-    presup = data['presupuesto'].groupby(['Mes_Año', 'Categoria'])['Valor'].sum().to_frame()
+    trans_df = data['transacciones']
+    presup_df = data['presupuesto']
+    trans_df['Mes_Año_dt'] = pd.to_datetime(trans_df['Mes_Año'], format='%b-%Y')
+    presup_df['Mes_Año_dt'] = pd.to_datetime(presup_df['Mes_Año'], format='%b-%Y')
+    trans_f_df = trans_df[trans_df['Mes_Año_dt'] == trans_df['Mes_Año_dt'].max()]
+    presup_f_df = presup_df[presup_df['Mes_Año_dt'] == trans_df['Mes_Año_dt'].max()]
+    presup = presup_f_df.groupby(['Mes_Año', 'Categoria'])['Valor'].sum().to_frame()
     presup = presup.rename(columns={"Valor": "Presupuesto"})
-    trans = data['transacciones'].groupby(['Mes_Año', 'Categoria'])['Importe'].sum().to_frame()
+    trans = trans_f_df.groupby(['Mes_Año', 'Categoria'])['Importe'].sum().to_frame()
     trans = trans.rename(columns={"Importe": "Real"})
     df = pd.merge(presup, trans, on=['Mes_Año', 'Categoria'])
 
+    max_date = trans_f_df['Mes_Año'].max()
     # Resumen por categoría
     budget_summary = (
         df.groupby("Categoria")[["Presupuesto", "Real"]]
         .sum()
         .reset_index()
     )
-    fig1 = px.bar(budget_summary, x=['Presupuesto', 'Real'], y='Categoria', orientation='h', barmode= 'group', title='Cumplimiento del presupuesto por categoría')
+
+
+    fig1 = px.bar(budget_summary, x=['Presupuesto', 'Real'], y='Categoria', orientation='h', barmode= 'group', title=f'Cumplimiento del presupuesto por categoría')
 
     container_height = st.session_state.get("container_height", 800)
     chart_height = int(container_height * 0.48)
