@@ -79,8 +79,8 @@ def load_and_process_data(uploaded_file):
                 data['presupuesto']['Mes_Año'] = data['presupuesto']['Fecha'].dt.strftime('%b-%Y')
 
         # Procesar Saldos
-        if 'Saldos' in excel_data:
-            saldos_df = excel_data['Saldos']
+        if 'Activos' in excel_data:
+            saldos_df = excel_data['Activos']
             if not saldos_df.empty:
                 id_cols = ['Nombre', 'Tipo de Cuenta']
                 available_id_cols = [col for col in id_cols if col in saldos_df.columns]
