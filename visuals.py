@@ -171,7 +171,7 @@ def create_transactions_charts(df):
                   barmode='group', title = 'Evolución de Ingesos vs Gastos')
 
     container_height = st.session_state.get("container_height", 800)
-    chart_height = int(container_height * 0.35)
+    chart_height = int(container_height * 0.37)
     fig1.update_layout(
         autosize=True,
         plot_bgcolor="#0f172a",  # chart area
