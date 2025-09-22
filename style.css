@@ -10,7 +10,16 @@ header[data-testid="stHeader"] {
     height: 0px;
 }
 
+/* Color fijo del icono >> */
+span[data-testid="stIconMaterial"] {
+    color: #38bdf8 !important;   /* azul claro */
+    background-color: transparent !important; /* sin fondo */
+}
 
+/* Hover (si quieres que cambie al pasar el ratón) */
+span[data-testid="stIconMaterial"]:hover {
+    color: #60a5fa !important;  /* azul un poco más intenso */
+}
 
 iframe[data-testid="stCustomComponentV1"] {
         height: 0 !important;
