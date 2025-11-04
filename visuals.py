@@ -231,44 +231,64 @@ def create_transactions_charts(df):
     return fig1, fig2
 
 def create_balance_chart(df):
-    """
-    Crea gráfico de evolución de saldos
-    """
     if df is None or df.empty:
         return None
+
     container_height = st.session_state.get("container_height", 800)
     chart_height = int(container_height * 0.45)
 
-    fig = px.area(df, x='Fecha', y='Valor', color='Nombre', title = 'Distribución del patrimonio',
-                  markers=True)
+    fig = px.area(
+        df,
+        x='Fecha',
+        y='Valor',
+        color='Nombre',
+        title='Distribución del patrimonio',
+        markers=True
+    )
+
+    # -------------------------------
+    # ✅ 1. Calcular total por fecha
+    # -------------------------------
+    total_df = df.groupby("Fecha", as_index=False)["Valor"].sum()
+
+    # -------------------------------
+    # ✅ 2. Añadir anotaciones (labels)
+    # -------------------------------
+    for _, row in total_df.iterrows():
+        fig.add_annotation(
+            x=row["Fecha"],
+            y=row["Valor"],
+            text=str(int(row["Valor"])),    # cambia a round(...) si quieres decimales
+            showarrow=False,
+            font=dict(color="white", size=12),
+            yshift=10                       # separa el label del área
+        )
+
+    # -------------------------------
+    #  Layout (tu código original)
+    # -------------------------------
     fig.update_layout(
         autosize=True,
-        plot_bgcolor="#0f172a",  # chart area
-        paper_bgcolor="#0f172a",  # outer area
+        plot_bgcolor="#0f172a",
+        paper_bgcolor="#0f172a",
         font=dict(color="white"),
         height=chart_height,
-        title=dict(
-            font=dict(
-                color="white"  # font color
-            ),
-            y=0.82,          # <--- mueve el título más cerca del gráfico
-            yanchor="top"    # ancla desde arriba
-        ),
-        # Legend config
+        title=dict(font=dict(color="white"), y=0.82, yanchor="top"),
         legend=dict(
-            orientation="h",  # horizontal
-            yanchor="top",  # anchor legend to top of its box
-            y=-0.2,  # move it below the chart
+            orientation="h",
+            yanchor="top",
+            y=-0.2,
             xanchor="center",
             x=0.5,
-            title=None,  # remove legend title
-            font=dict(color="white")  # legend text color
+            title=None,
+            font=dict(color="white")
         )
     )
     fig.update_xaxes(title=None)
     fig.update_yaxes(title=None)
-    fig.update_traces(hovertemplate='Valor: %{y}<br>Fecha: %{x}')
+
     return fig
+
 
 
 def create_debt_chart(df):
