@@ -267,6 +267,7 @@ def create_balance_chart(df):
     )
     fig.update_xaxes(title=None)
     fig.update_yaxes(title=None)
+    fig.update_traces(hovertemplate='Valor: %{y}<br>Fecha: %{x}')
     return fig
 
 
