@@ -127,15 +127,16 @@ def create_balance_chart(df):
             y=-0.2,
             xanchor="center",
             x=0.5,
+            height = 350,
             title=None,
             font=dict(color="white")
         )
     )
     fig.update_xaxes(title=None)
     fig.update_yaxes(title=None)
-    #fig.update_layout(
-    #    margin=dict(l=0, r=0, t=50, b=0)
-    #)
+    fig.update_layout(
+        margin=dict(l=0, r=0, t=50, b=0)
+    )
 
     return fig
 
@@ -168,7 +169,7 @@ def categorias_pie_chart(df):
         plot_bgcolor="#0f172a",
         paper_bgcolor="#0f172a",
         font=dict(color="white"),
-        height=chart_height,
+        height=350,
         title=dict(font=dict(color="white")),
         legend=dict(
             orientation="h",
@@ -181,9 +182,9 @@ def categorias_pie_chart(df):
         )
     )
 
-    #fig.update_layout(
-    #    margin=dict(l=0, r=0, t=50, b=0)
-    #)
+    fig.update_layout(
+        margin=dict(l=0, r=0, t=50, b=0)
+    )
 
     return fig
 
@@ -209,7 +210,7 @@ def create_investment_chart(df):
         plot_bgcolor="#0f172a",  # chart area
         paper_bgcolor="#0f172a",  # outer area
         font=dict(color="white"),
-        height=chart_height,
+        height=350,
         title=dict(
             font=dict(
                 color="white"  # font color
@@ -229,9 +230,9 @@ def create_investment_chart(df):
         )
     )
 
-    #fig.update_layout(
-    #    margin=dict(l=0, r=0, t=50, b=0)
-    #)
+    fig.update_layout(
+        margin=dict(l=0, r=0, t=50, b=0)
+    )
 
     fig.update_xaxes(title=None)
     fig.update_yaxes(title=None)
