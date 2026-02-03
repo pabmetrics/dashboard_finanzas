@@ -27,6 +27,8 @@ if data:
     col = st.columns((1, 1, 1), gap='medium')
     fig1 = create_balance_chart(data['saldos'])
     fig2 = categorias_pie_chart(data['inversiones_red'])
+
+    st.markdown("---")
     with col[0]:
         if fig1:
             st.plotly_chart(fig1, width='stretch', config={"displayModeBar": False})
