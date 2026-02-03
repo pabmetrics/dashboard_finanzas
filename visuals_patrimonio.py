@@ -133,9 +133,9 @@ def create_balance_chart(df):
     )
     fig.update_xaxes(title=None)
     fig.update_yaxes(title=None)
-    fig.update_layout(
-        margin=dict(l=0, r=0, t=50, b=0)
-    )
+    #fig.update_layout(
+    #    margin=dict(l=0, r=0, t=50, b=0)
+    #)
 
     return fig
 
@@ -181,9 +181,9 @@ def categorias_pie_chart(df):
         )
     )
 
-    fig.update_layout(
-        margin=dict(l=0, r=0, t=50, b=0)
-    )
+    #fig.update_layout(
+    #    margin=dict(l=0, r=0, t=50, b=0)
+    #)
 
     return fig
 
@@ -229,9 +229,9 @@ def create_investment_chart(df):
         )
     )
 
-    fig.update_layout(
-        margin=dict(l=0, r=0, t=50, b=0)
-    )
+    #fig.update_layout(
+    #    margin=dict(l=0, r=0, t=50, b=0)
+    #)
 
     fig.update_xaxes(title=None)
     fig.update_yaxes(title=None)
