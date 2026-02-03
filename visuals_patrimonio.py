@@ -119,7 +119,7 @@ def create_balance_chart(df):
         plot_bgcolor="#0f172a",
         paper_bgcolor="#0f172a",
         font=dict(color="white"),
-        height=chart_height,
+        height=350,
         title=dict(font=dict(color="white"), y=1, yanchor="top"),
         legend=dict(
             orientation="h",
@@ -127,7 +127,6 @@ def create_balance_chart(df):
             y=-0.2,
             xanchor="center",
             x=0.5,
-            height = 350,
             title=None,
             font=dict(color="white")
         )
