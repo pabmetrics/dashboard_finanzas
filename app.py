@@ -29,10 +29,10 @@ if data:
     fig2 = categorias_pie_chart(data['inversiones_red'])
     with col[0]:
         if fig1:
-            st.plotly_chart(fig1, use_container_width=True, config={"displayModeBar": False})
+            st.plotly_chart(fig1, width='stretch', config={"displayModeBar": False})
     with col[1]:
         if fig2:
-            st.plotly_chart(fig2, use_container_width=True, config={"displayModeBar": False})
+            st.plotly_chart(fig2, width='stretch', config={"displayModeBar": False})
     with col[2]:
         fig3 = create_investment_chart(data['inversiones'])
         if fig3:
@@ -48,14 +48,14 @@ if data:
         load_summary_kpis(data)
         fig1, fig2 = create_transactions_charts(data['transacciones'])
         if fig1:
-            st.plotly_chart(fig1, use_container_width=True)
+            st.plotly_chart(fig1, width='stretch')
 
         if fig2:
-            st.plotly_chart(fig2, use_container_width=True)
+            st.plotly_chart(fig2, width='stretch')
     with col[1]:
         fig3 = create_balance_chart(data['saldos'])
         if fig3:
-            st.plotly_chart(fig3, use_container_width=True)
+            st.plotly_chart(fig3, width='stretch')
         load_saldo_kpis(data)
         debt_fig = create_debt_chart(data['deudas'])
         if debt_fig:
