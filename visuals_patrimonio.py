@@ -168,6 +168,7 @@ def categorias_pie_chart(df):
         plot_bgcolor="#0f172a",
         paper_bgcolor="#0f172a",
         font=dict(color="white"),
+        height=chart_height,
         title=dict(font=dict(color="white")),
         legend=dict(
             orientation="h",
@@ -208,6 +209,7 @@ def create_investment_chart(df):
         plot_bgcolor="#0f172a",  # chart area
         paper_bgcolor="#0f172a",  # outer area
         font=dict(color="white"),
+        height=chart_height,
         title=dict(
             font=dict(
                 color="white"  # font color
