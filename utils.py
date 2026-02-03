@@ -121,7 +121,14 @@ def load_and_process_data(uploaded_file):
                 inv_un_df['Nombre'] = 'Inversiones'
                 inv_un_df['Tipo de Cuenta'] = 'Inversiones'
 
+                saldos_red_df = data['saldos'].groupby(['Fecha'], as_index=False)['Valor'].sum()
+                saldos_red_df['Categoría'] = 'Liquidez'
+
+                inv_red_df = data['inversiones'].groupby(['Fecha', 'Categoría'], as_index=False)['Valor Actual'].sum().rename(columns={'Valor Actual': 'Valor'})
+
                 data['saldos'] = pd.concat([data['saldos'], inv_un_df], ignore_index=True)
+                data['inversiones_red'] = pd.concat([saldos_red_df, inv_red_df], ignore_index=True)
+
 
         return data
 

@@ -91,3 +91,7 @@ div[data-testid="stMetricValue"] {
     color: #ffffff;
     font-size: 1.5vw;
 }
+
+.plot-container {
+    height: 2vh !important
+}

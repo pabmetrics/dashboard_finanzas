@@ -9,7 +9,8 @@ from datetime import datetime, timedelta
 import openpyxl
 import warnings
 
-from visuals import *
+from visuals import load_page_config, load_sidebar
+from visuals_patrimonio import load_patrimonio_kpis, create_balance_chart, categorias_pie_chart, create_investment_chart
 
 
 warnings.filterwarnings('ignore')
@@ -21,6 +22,26 @@ load_page_config()
 # Sidebar and data load
 data = load_sidebar()
 
+if data:
+    load_patrimonio_kpis(data)
+    col = st.columns((1, 1, 1), gap='medium')
+    fig1 = create_balance_chart(data['saldos'])
+    fig2 = categorias_pie_chart(data['inversiones_red'])
+    with col[0]:
+        if fig1:
+            st.plotly_chart(fig1, use_container_width=True, config={"displayModeBar": False})
+    with col[1]:
+        if fig2:
+            st.plotly_chart(fig2, use_container_width=True, config={"displayModeBar": False})
+    with col[2]:
+        fig3 = create_investment_chart(data['inversiones'])
+        if fig3:
+            st.plotly_chart(fig3, width='stretch')
+else:
+    st.info("👆 Sube tu archivo Excel en el menu lateral para comenzar el análisis")
+
+## OLD VERSION
+a = """
 if data:
     col = st.columns((1.5, 2, 2), gap='medium')
     with col[0]:
@@ -50,3 +71,4 @@ if data:
             st.plotly_chart(budget_fig, width='stretch')
 else:
     st.info("👆 Sube tu archivo Excel en el menu lateral para comenzar el análisis")
+"""
