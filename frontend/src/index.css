@@ -1,0 +1,53 @@
+@import "tailwindcss";
+
+/* Paleta (método dataviz, modo oscuro validado). El texto usa siempre tokens de texto. */
+:root {
+  color-scheme: dark;
+  --bg: #121211;
+  --surface-1: #1a1a19;
+  --surface-2: #232321;
+  --border: #33332f;
+  --text-primary: #f0efec;
+  --text-secondary: #c3c2b7;
+  --text-muted: #8f8e86;
+  --series-1: #3987e5; /* Liquidez */
+  --series-2: #d95926; /* Renta Variable */
+  --series-3: #199e70; /* Renta Fija */
+  --good: #0ca30c;
+  --critical: #d03b3b;
+  --warning: #fab219;
+}
+@theme {
+  --color-bg: var(--bg);
+  --color-s1: var(--surface-1);
+  --color-s2: var(--surface-2);
+  --color-line: var(--border);
+  --color-tx: var(--text-primary);
+  --color-tx2: var(--text-secondary);
+  --color-tx3: var(--text-muted);
+  --color-good: var(--good);
+  --color-bad: var(--critical);
+  --color-warn: var(--warning);
+  --color-acc: var(--series-1);
+}
+html, body { background: var(--bg); color: var(--text-primary); }
+body {
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+.num { font-variant-numeric: tabular-nums; }
+
+/* Manual (markdown) */
+.manual { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.55; }
+.manual h1 { color: var(--text-primary); font-size: 1.35rem; font-weight: 600; margin-bottom: 0.75rem; }
+.manual h2 { color: var(--text-primary); font-size: 1.1rem; font-weight: 600; margin: 1.6rem 0 0.5rem; }
+.manual h3 { color: var(--text-primary); font-size: 0.95rem; font-weight: 600; margin: 1.1rem 0 0.4rem; }
+.manual p, .manual ul, .manual ol, .manual table { margin-bottom: 0.7rem; }
+.manual ul { list-style: disc; padding-left: 1.2rem; }
+.manual ol { list-style: decimal; padding-left: 1.2rem; }
+.manual li { margin-bottom: 0.25rem; }
+.manual strong { color: var(--text-primary); }
+.manual code { background: var(--surface-2); border-radius: 4px; padding: 0 4px; font-size: 0.85em; }
+.manual table { display: block; overflow-x: auto; font-size: 0.8rem; border-collapse: collapse; }
+.manual th, .manual td { border: 1px solid var(--border); padding: 6px 8px; vertical-align: top; text-align: left; }
+.manual th { color: var(--text-primary); background: var(--surface-1); }

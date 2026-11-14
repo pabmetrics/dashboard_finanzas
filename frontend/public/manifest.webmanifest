@@ -1,0 +1,3 @@
+{ "name": "Finanzas", "short_name": "Finanzas", "start_url": "/", "display": "standalone",
+  "background_color": "#121211", "theme_color": "#121211",
+  "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }] }
